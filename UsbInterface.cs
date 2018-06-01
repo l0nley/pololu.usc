@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Pololu.Usc
 {
-    public sealed class UsbInterface
+    internal sealed class UsbInterface
     {
         private static readonly Lazy<UsbInterface> _instance = new Lazy<UsbInterface>(() => new UsbInterface());
         private UsbContext _context;

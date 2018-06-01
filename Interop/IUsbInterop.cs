@@ -15,5 +15,6 @@ namespace Pololu.Usc.Interop
         unsafe int GetDeviceList(UsbContext context, out IntPtr* device_list);
         unsafe void FreeDeviceList(IntPtr* deviceList, int v);
         void UnrefDevice(IntPtr item);
+        unsafe int ControlTransfer(IntPtr deviceHandle, byte requestType, byte request, ushort value, ushort index, void* data, ushort length, ushort timeout);
     }
 }

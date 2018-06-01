@@ -1,8 +1,6 @@
 ﻿using Pololu.Usc.Structs;
 using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace Pololu.Usc.Interop
 {
@@ -99,6 +97,46 @@ namespace Pololu.Usc.Interop
         public int HandleEvents(UsbContext context)
         {
             return libusb_handle_events(context);
+        }
+
+        public int GetDeviceDescriptor(IntPtr deviceHandle, out DeviceDescriptor descriptor)
+        {
+            return libusb_get_device_descriptor(deviceHandle, out descriptor);
+        }
+
+        public unsafe int GetStringDescriptorASCII(IntPtr deviceHandle, byte iSerialNumber, byte* p, int length)
+        {
+            return libusb_get_string_descriptor_ascii(deviceHandle, iSerialNumber, p, length);
+        }
+
+        public int OpenDevice(IntPtr devicePointer, out IntPtr deviceHandle)
+        {
+            return libusb_open(devicePointer, out deviceHandle);
+        }
+
+        public void CloseDevice(IntPtr deviceHandle)
+        {
+            libusb_close(deviceHandle);
+        }
+
+        public unsafe int GetDeviceList(UsbContext context, out IntPtr* deviceList)
+        {
+            return libusb_get_device_list(context, out deviceList);
+        }
+
+        public unsafe void FreeDeviceList(IntPtr* deviceList, int v)
+        {
+            libusb_free_device_list(deviceList, v);
+        }
+
+        public void UnrefDevice(IntPtr device)
+        {
+            libusb_unref_device(device);
+        }
+
+        public unsafe int ControlTransfer(IntPtr deviceHandle, byte requestType, byte request, ushort value, ushort index, void* data, ushort length, ushort v)
+        {
+            return libusb_control_transfer(deviceHandle, requestType, request, value, index, data, length, v);
         }
     }
 }

@@ -20,6 +20,7 @@ namespace Pololu.Usc
         /// <param name="sr">The file to read from.</param>
         /// <remarks>This function is messy.  Maybe I should have tried the XPath
         /// library.</remarks>
+        /*
         public static UscSettings Load(StreamReader sr, IList<String> warnings)
         {
             XmlReader reader = XmlReader.Create(sr);
@@ -308,7 +309,7 @@ namespace Pololu.Usc
 
             return settings;
         }
-
+        */
         /// <summary>
         /// If the XmlReader is at an element that has attributes, this will read all those
         /// attributes in to the dictionary.
@@ -397,6 +398,7 @@ namespace Pololu.Usc
         /// </summary>
         /// <param name="settings">The settings to read from.</param>
         /// <param name="sw">The file to write to.</param>
+         /*
         public static void Save(UscSettings settings, StreamWriter sw)
         {
             XmlTextWriter writer = new XmlTextWriter(sw)
@@ -474,5 +476,6 @@ namespace Pololu.Usc
 
             writer.WriteEndElement(); // End UscSettings tag.
         }
+        */
     }
 }

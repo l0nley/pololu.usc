@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 namespace Pololu.Usc.Models
 {
+    /*
     public class UscSettings
     {
         /// <summary>
@@ -174,4 +175,5 @@ namespace Pololu.Usc.Models
             Script = script;
         }
     }
+    */
 }

@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 namespace Pololu.Usc.Structs
 {
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    unsafe public struct MicroMaestroVariables
+    unsafe internal struct MicroMaestroVariables
     {
         /// <summary>
         /// The number of values on the data stack (0-32).  A value of 0 means the stack is empty.
