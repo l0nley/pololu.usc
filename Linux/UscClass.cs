@@ -1,5 +1,6 @@
 using Pololu.Usc.Enums;
 using Pololu.Usc.Models;
+using Pololu.Usc.Structs;
 using System;
 using System.Collections.Generic;
 
@@ -13,7 +14,7 @@ namespace Pololu.Usc.Linux
     /// an abstract Maestro and attempt to re-connect whenever the connection is
     /// lost.
     /// </remarks>
-    public partial class UscClass : UsbDevice, ISettingsHolder
+    public partial class UscClass : UsbDevice
     {
         /// <summary>
         /// The device interface GUID used to detect the native USB interface
@@ -195,7 +196,7 @@ namespace Pololu.Usc.Linux
             return (Parameter)((byte)(p) + servo * ServoParameterBytes);
         }
 
-        public UscClass(DeviceListItem deviceListItem) : base(deviceListItem)
+        public UscClass(DeviceDescription deviceListItem) : base(deviceListItem)
         {
             // Determine the number of servos from the product id.
             switch (GetProductID())
@@ -247,7 +248,7 @@ namespace Pololu.Usc.Linux
         }
 
 
-        public static List<DeviceListItem> GetConnectedDevices()
+        public static List<DeviceDescription> GetConnectedDevices()
         {
             return GetDeviceList(VendorID, ProductIDArray);
             /*
