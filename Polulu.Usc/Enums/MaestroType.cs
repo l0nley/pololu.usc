@@ -2,9 +2,9 @@
 {
     public enum MaestroType : ushort
     {
-        Servo6 = 0x89,
-        Servo12 = 0x8A,
-        Servo18 = 0x8B,
-        Servo24 = 0x8C
+        Servo6 = 0x0089,
+        Servo12 = 0x008A,
+        Servo18 = 0x008B,
+        Servo24 = 0x008C
     }
 }

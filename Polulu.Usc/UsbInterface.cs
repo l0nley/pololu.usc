@@ -37,6 +37,7 @@ namespace Pololu.Usc
             var list = new List<DeviceDescription>();
 
             int count = Helpers.ThrowIfErrorCode(UsbInterop.Instance.GetDeviceList(Context, out IntPtr* deviceList));
+            Console.WriteLine($"CNT:{count}");
             try
             {
                 for (int i = 0; i < count; i++)

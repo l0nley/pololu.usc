@@ -11,3 +11,6 @@ D:\Projects\pololu.usc\Polulu.Usc.Cmd\obj\Debug\netcoreapp3.1\Polulu.Usc.Cmd.Ass
 D:\Projects\pololu.usc\Polulu.Usc.Cmd\obj\Debug\netcoreapp3.1\Polulu.Usc.Cmd.dll
 D:\Projects\pololu.usc\Polulu.Usc.Cmd\obj\Debug\netcoreapp3.1\Polulu.Usc.Cmd.pdb
 D:\Projects\pololu.usc\Polulu.Usc.Cmd\obj\Debug\netcoreapp3.1\Polulu.Usc.Cmd.genruntimeconfig.cache
+D:\Projects\pololu.usc\Polulu.Usc.Cmd\bin\Debug\netcoreapp3.1\Pololu.Usc.dll
+D:\Projects\pololu.usc\Polulu.Usc.Cmd\bin\Debug\netcoreapp3.1\Pololu.Usc.pdb
+D:\Projects\pololu.usc\Polulu.Usc.Cmd\obj\Debug\netcoreapp3.1\Polulu.Usc.Cmd.csproj.CopyComplete

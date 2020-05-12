@@ -28,7 +28,7 @@ namespace Pololu.Usc
         private static readonly ushort PololuVendorId = 0x1ffb;
         /// <summary>The Micro Maestro's product ID.</summary>
         /// <value>0x0089</value>
-        private static readonly ushort[] ProductIDArray = { (ushort)MaestroType.Servo6, (ushort)MaestroType.Servo12, (ushort)MaestroType.Servo18, (ushort)MaestroType.Servo24 };
+        private static readonly ushort[] _productIDArray = { (ushort)MaestroType.Servo6, (ushort)MaestroType.Servo12, (ushort)MaestroType.Servo18, (ushort)MaestroType.Servo24 };
 
         private byte _firmwareVersionMinor = 0xFF;
         private byte _firmwareVersionMajor = 0xFF;
@@ -70,12 +70,12 @@ namespace Pololu.Usc
 
         public static IEnumerable<DeviceDescription> GetDevices()
         {
-            return UsbInterface.Instance.GetDeviceList(PololuVendorId, ProductIDArray);
+            return UsbInterface.Instance.GetDeviceList(PololuVendorId, _productIDArray);
         }
 
         public static MaestroController GetDevice(DeviceDescription description)
         {
-            if (false == ProductIDArray.Contains(description.ProductId))
+            if (false == _productIDArray.Contains(description.ProductId))
             {
                 throw new InvalidProductIdentityException($"Unkown product id :{description.ProductId}");
             }
