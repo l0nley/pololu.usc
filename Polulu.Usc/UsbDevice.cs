@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Pololu.Usc
 {
-    internal class UsbDevice : IDisposable
+    public class UsbDevice : IDisposable
     {
         private IntPtr _deviceHandle;
 
@@ -70,7 +70,7 @@ namespace Pololu.Usc
 
         private void ThrowIfDisposed()
         {
-            if(_disposed)
+            if (_disposed)
             {
                 throw new ObjectDisposedException(Description.Name);
             }

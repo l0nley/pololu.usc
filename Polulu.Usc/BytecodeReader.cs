@@ -1,5 +1,6 @@
 using Pololu.Usc.Enums;
 using Pololu.Usc.Exceptions;
+using Pololu.Usc.Models;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -10,21 +11,21 @@ namespace Pololu.Usc
 {
     internal static class BytecodeReader
     {
-        private static Dictionary<string, OperationCode> dictionary;
-        private static BytecodeReader.Mode mode;
+        private static Dictionary<string, OperationCode> _dictionary;
+        private static Mode _mode;
 
         private static void InitDictionary()
         {
-            if (dictionary != null)
+            if (_dictionary != null)
             {
                 return;
             }
             var names = Enum.GetNames(typeof(OperationCode));
             var values = (OperationCode[])Enum.GetValues(typeof(OperationCode));
-            dictionary = new Dictionary<string, OperationCode>();
+            _dictionary = new Dictionary<string, OperationCode>();
             for (int index = 0; index < names.Length; ++index)
             {
-                dictionary[names[index]] = values[index];
+                _dictionary[names[index]] = values[index];
             }
         }
 
@@ -91,7 +92,7 @@ namespace Pololu.Usc
         {
             InitDictionary();
             var bytecodeProgram = new BytecodeProgram();
-            mode = Mode.NORMAL;
+            _mode = Mode.NORMAL;
             if (program == null)
             {
                 program = "";
@@ -113,7 +114,7 @@ namespace Pololu.Usc
                     else
                     {
                         string upperInvariant = str3.ToUpperInvariant();
-                        switch (mode)
+                        switch (_mode)
                         {
                             case Mode.NORMAL:
                                 ParseString(upperInvariant, bytecodeProgram, "script", lineNumber, column_number, isMiniMaestro);
@@ -144,14 +145,14 @@ namespace Pololu.Usc
         private static void ParseGoto(string s, BytecodeProgram bytecodeProgram, string filename, int lineNumber, int columnNumber)
         {
             bytecodeProgram.AddInstruction(BytecodeInstruction.NewJumpToLabel("USER_" + s, filename, lineNumber, columnNumber));
-            mode = Mode.NORMAL;
+            _mode = Mode.NORMAL;
         }
 
         private static void ParseSubroutine(string s, BytecodeProgram bytecodeProgram, string filename, int line_number, int column_number)
         {
             if (LooksLikeLiteral(s))
                 throw new Exception("The name " + s + " is not valid as a subroutine name (it looks like a number).");
-            if (dictionary.ContainsKey(s))
+            if (_dictionary.ContainsKey(s))
                 throw new Exception("The name " + s + " is not valid as a subroutine name (it is a built-in command).");
             foreach (string name in Enum.GetNames(typeof(Keyword)))
             {
@@ -159,7 +160,7 @@ namespace Pololu.Usc
                     throw new Exception("The name " + s + " is not valid as a subroutine name (it is a keyword).");
             }
             bytecodeProgram.AddInstruction(BytecodeInstruction.NewSubroutine(s, filename, line_number, column_number));
-            mode = Mode.NORMAL;
+            _mode = Mode.NORMAL;
         }
 
         private static bool LooksLikeLiteral(string s)
@@ -202,10 +203,10 @@ namespace Pololu.Usc
                 throw new Exception("Error parsing " + s + ": " + ex.ToString());
             }
             if (s == Keyword.GOTO.ToString())
-                mode = Mode.GOTO;
+                _mode = Mode.GOTO;
             else if (s == Keyword.SUB.ToString())
             {
-                mode = Mode.SUBROUTINE;
+                _mode = Mode.SUBROUTINE;
             }
             else
             {
@@ -271,7 +272,7 @@ namespace Pololu.Usc
                 {
                     try
                     {
-                        OperationCode op = dictionary[s];
+                        OperationCode op = _dictionary[s];
                         switch (op)
                         {
                             case OperationCode.LITERAL:

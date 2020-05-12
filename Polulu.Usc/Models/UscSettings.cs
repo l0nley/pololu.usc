@@ -1,10 +1,9 @@
 using Pololu.Usc.Enums;
-using Pololu.Usc.Linux;
 using System.Collections.Generic;
 
 namespace Pololu.Usc.Models
 {
-    /*
+
     public class UscSettings
     {
         /// <summary>
@@ -126,7 +125,7 @@ namespace Pololu.Usc.Models
         /// </summary>
         public bool EnablePullups { get; set; } = false;
 
-        public IList<Sequence> Sequences { get; set; } = new List<Sequence>();
+        public IList<Sequence> Sequences { get; private set; } = new List<Sequence>();
 
         /// <summary>
         /// The number of servos on the device.
@@ -148,7 +147,7 @@ namespace Pololu.Usc.Models
 
         public BytecodeProgram BytecodeProgram { get; private set; }
 
-        
+
 
         public decimal PeriodInMicroseconds
         {
@@ -156,7 +155,7 @@ namespace Pololu.Usc.Models
             {
                 if (ServoCount == 6)
                 {
-                    return UscClass.PeriodToMicroseconds(ServoPeriod, ServosAvailable);
+                    return MaestroHelpers.PeriodToMicroseconds(ServoPeriod, ServosAvailable);
                 }
                 else
                 {
@@ -175,5 +174,4 @@ namespace Pololu.Usc.Models
             Script = script;
         }
     }
-    */
 }

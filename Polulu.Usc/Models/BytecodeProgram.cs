@@ -3,39 +3,39 @@ using Pololu.Usc.Exceptions;
 using System;
 using System.Collections.Generic;
 
-namespace Pololu.Usc
+namespace Pololu.Usc.Models
 {
-    internal class BytecodeProgram
+    public class BytecodeProgram
     {
-        private List<string> privateSourceLines = new List<string>();
-        private List<BytecodeInstruction> instructionList = new List<BytecodeInstruction>();
-        private Stack<int> openBlocks = new Stack<int>();
-        private Stack<BlockType> openBlockTypes = new Stack<BlockType>();
+        private readonly List<string> _privateSourceLines = new List<string>();
+        private readonly List<BytecodeInstruction> _instructionList = new List<BytecodeInstruction>();
+        private readonly Stack<int> _openBlocks = new Stack<int>();
+        private readonly Stack<BlockType> _openBlockTypes = new Stack<BlockType>();
         public Dictionary<string, ushort> subroutineAddresses = new Dictionary<string, ushort>();
         public Dictionary<string, byte> subroutineCommands = new Dictionary<string, byte>();
-        private const ushort CRC16_POLY = 40961;
-        private int maxBlock;
+        // private const ushort CRC16_POLY = 40961;
+        private int _maxBlock;
 
         public string GetSourceLine(int line)
         {
-            return privateSourceLines[line - 1];
+            return _privateSourceLines[line - 1];
         }
 
         public void AddSourceLine(string line)
         {
-            privateSourceLines.Add(line);
+            _privateSourceLines.Add(line);
         }
 
         public int GetSourceLineCount()
         {
-            return privateSourceLines.Count;
+            return _privateSourceLines.Count;
         }
 
         public BytecodeInstruction this[int index]
         {
             get
             {
-                return instructionList[index];
+                return _instructionList[index];
             }
         }
 
@@ -43,28 +43,28 @@ namespace Pololu.Usc
         {
             get
             {
-                return instructionList.Count;
+                return _instructionList.Count;
             }
         }
 
         internal void AddInstruction(BytecodeInstruction instruction)
         {
-            instructionList.Add(instruction);
+            _instructionList.Add(instruction);
         }
 
         internal void AddLiteral(int literal, string filename, int lineNumber, int columnNumber, bool isMiniMaestro)
         {
-            if (instructionList.Count == 0 || instructionList[instructionList.Count - 1].Operation != OperationCode.LITERAL)
+            if (_instructionList.Count == 0 || _instructionList[_instructionList.Count - 1].Operation != OperationCode.LITERAL)
             {
                 AddInstruction(new BytecodeInstruction(OperationCode.LITERAL, filename, lineNumber, columnNumber));
             }
-            instructionList[instructionList.Count - 1].AddLiteralArgument(literal, isMiniMaestro);
+            _instructionList[_instructionList.Count - 1].AddLiteralArgument(literal, isMiniMaestro);
         }
 
         public IList<byte> GetByteList()
         {
             var byteList = new List<byte>();
-            foreach (BytecodeInstruction instruction in instructionList)
+            foreach (BytecodeInstruction instruction in _instructionList)
             {
                 byteList.AddRange(instruction.ToByteList());
             }
@@ -74,9 +74,9 @@ namespace Pololu.Usc
 
         public int FindLabelIndex(string name)
         {
-            for (int index = 0; index < instructionList.Count; ++index)
+            for (int index = 0; index < _instructionList.Count; ++index)
             {
-                if (instructionList[index].IsLabel && instructionList[index].LabelName == name)
+                if (_instructionList[index].IsLabel && _instructionList[index].LabelName == name)
                 {
                     return index;
                 }
@@ -86,13 +86,13 @@ namespace Pololu.Usc
 
         public BytecodeInstruction FindLabelInstruction(string name)
         {
-            return instructionList[FindLabelIndex(name)];
+            return _instructionList[FindLabelIndex(name)];
         }
 
         public BytecodeInstruction GetInstructionAt(ushort program_counter)
         {
             int num = 0;
-            foreach (BytecodeInstruction instruction in instructionList)
+            foreach (BytecodeInstruction instruction in _instructionList)
             {
                 List<byte> byteList = instruction.ToByteList();
                 if (num >= program_counter && byteList.Count != 0)
@@ -122,43 +122,43 @@ namespace Pololu.Usc
 
         internal void OpenBlock(BlockType blocktype, string filename, int line_number, int column_number)
         {
-            AddInstruction(BytecodeInstruction.NewLabel("block_start_" + maxBlock.ToString(), filename, line_number, column_number));
-            openBlocks.Push(maxBlock);
-            openBlockTypes.Push(blocktype);
-            ++maxBlock;
+            AddInstruction(BytecodeInstruction.NewLabel("block_start_" + _maxBlock.ToString(), filename, line_number, column_number));
+            _openBlocks.Push(_maxBlock);
+            _openBlockTypes.Push(blocktype);
+            ++_maxBlock;
         }
 
         internal BlockType GetCurrentBlockType()
         {
-            return openBlockTypes.Peek();
+            return _openBlockTypes.Peek();
         }
 
         internal string GetCurrentBlockStartLabel()
         {
-            return "block_start_" + openBlocks.Peek().ToString();
+            return "block_start_" + _openBlocks.Peek().ToString();
         }
 
         internal string GetCurrentBlockEndLabel()
         {
-            return "block_end_" + openBlocks.Peek().ToString();
+            return "block_end_" + _openBlocks.Peek().ToString();
         }
 
         internal string GetNextBlockEndLabel()
         {
-            return "block_end_" + maxBlock.ToString();
+            return "block_end_" + _maxBlock.ToString();
         }
 
         internal void CloseBlock(string filename, int line_number, int column_number)
         {
-            AddInstruction(BytecodeInstruction.NewLabel("block_end_" + openBlocks.Pop().ToString(), filename, line_number, column_number));
-            int num = (int)openBlockTypes.Pop();
+            AddInstruction(BytecodeInstruction.NewLabel("block_end_" + _openBlocks.Pop().ToString(), filename, line_number, column_number));
+            int num = (int)_openBlockTypes.Pop();
         }
 
         internal bool BlockIsOpen
         {
             get
             {
-                return openBlocks.Count > 0;
+                return _openBlocks.Count > 0;
             }
         }
 
@@ -166,7 +166,7 @@ namespace Pololu.Usc
         {
             Dictionary<string, int> dictionary = new Dictionary<string, int>();
             int num = 0;
-            foreach (BytecodeInstruction instruction in instructionList)
+            foreach (BytecodeInstruction instruction in _instructionList)
             {
                 if (instruction.IsLabel)
                 {
@@ -176,7 +176,7 @@ namespace Pololu.Usc
                 }
                 num += instruction.ToByteList().Count;
             }
-            foreach (BytecodeInstruction instruction in instructionList)
+            foreach (BytecodeInstruction instruction in _instructionList)
             {
                 try
                 {
@@ -185,7 +185,7 @@ namespace Pololu.Usc
                 }
                 catch (KeyNotFoundException)
                 {
-                    GenerateInstructionException(instruction,"The label " + instruction.LabelName + " was not found.");
+                    GenerateInstructionException(instruction, "The label " + instruction.LabelName + " was not found.");
                 }
             }
         }
@@ -193,13 +193,13 @@ namespace Pololu.Usc
         internal void CompleteCalls(bool isMiniMaestro)
         {
             uint num1 = 128;
-            foreach (BytecodeInstruction instruction in instructionList)
+            foreach (BytecodeInstruction instruction in _instructionList)
             {
                 if (instruction.IsSubroutine)
                 {
                     if (subroutineCommands.ContainsKey(instruction.LabelName))
                     {
-                        GenerateInstructionException(instruction,"The subroutine " + instruction.LabelName + " has already been defined.");
+                        GenerateInstructionException(instruction, "The subroutine " + instruction.LabelName + " has already been defined.");
                     }
                     subroutineCommands[instruction.LabelName] = num1 < 256U ? (byte)num1 : (byte)54;
                     ++num1;
@@ -209,7 +209,7 @@ namespace Pololu.Usc
                     }
                 }
             }
-            foreach (BytecodeInstruction instruction in instructionList)
+            foreach (BytecodeInstruction instruction in _instructionList)
             {
                 try
                 {
@@ -218,17 +218,17 @@ namespace Pololu.Usc
                 }
                 catch (KeyNotFoundException)
                 {
-                    GenerateInstructionException(instruction,"Did not understand '" + instruction.LabelName + "'");
+                    GenerateInstructionException(instruction, "Did not understand '" + instruction.LabelName + "'");
                 }
             }
             int num2 = 0;
-            foreach (BytecodeInstruction instruction in instructionList)
+            foreach (BytecodeInstruction instruction in _instructionList)
             {
                 if (instruction.IsSubroutine)
                     subroutineAddresses[instruction.LabelName] = (ushort)num2;
                 num2 += instruction.ToByteList().Count;
             }
-            foreach (BytecodeInstruction instruction in instructionList)
+            foreach (BytecodeInstruction instruction in _instructionList)
             {
                 if (instruction.Operation == OperationCode.CALL)
                     instruction.LiteralArguments.Add(subroutineAddresses[instruction.LabelName]);
@@ -237,17 +237,17 @@ namespace Pololu.Usc
 
         internal void CompleteLiterals()
         {
-            foreach (BytecodeInstruction instruction in instructionList)
+            foreach (BytecodeInstruction instruction in _instructionList)
             {
                 instruction.CompleteLiterals();
             }
         }
-         
+
         private static void GenerateInstructionException(BytecodeInstruction instruction, string message)
         {
             throw new InstructionException($"{instruction.FileName}:{instruction.LineNumber}:{instruction.ColumnNumber}: {message}");
         }
-       
+
 
         private static ushort OneByteCRC(byte v)
         {

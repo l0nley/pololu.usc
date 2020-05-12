@@ -3,9 +3,9 @@ using System;
 using Pololu.Usc.Exceptions;
 using Pololu.Usc.Enums;
 
-namespace Pololu.Usc
+namespace Pololu.Usc.Models
 {
-    internal class BytecodeInstruction
+    public class BytecodeInstruction
     {
         public string FileName { get; private set; }
 

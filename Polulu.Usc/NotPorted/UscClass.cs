@@ -6,6 +6,7 @@ using System.Collections.Generic;
 
 namespace Pololu.Usc.Linux
 {
+    /*
     /// <summary>
     /// This class represents a Maestro that is connected to the computer.
     /// </summary>
@@ -14,8 +15,8 @@ namespace Pololu.Usc.Linux
     /// an abstract Maestro and attempt to re-connect whenever the connection is
     /// lost.
     /// </remarks>
-    /*
-    public partial class UscClass : UsbDevice
+    
+    public class UscClass : UsbDevice
     {
         /// <summary>
         /// The number of servos on the device.  This will be 6, 12, 18, or 24.
@@ -33,9 +34,6 @@ namespace Pololu.Usc.Linux
                 return ServoCount == 6;
             }
         }
-
-
-        
 
 
         public void SetUscSettings(UscSettings settings, bool newScript)
@@ -181,7 +179,7 @@ namespace Pololu.Usc.Linux
         /// If the key does not exist, creates it.  Returns the key.
         /// </summary>
         /// <returns></returns>
-        /* 
+        /*
         private RegistryKey openRegistryKey()
         {
             string keyname = "Software\\Pololu\\" + englishName + "\\" + getSerialNumber();
@@ -436,5 +434,5 @@ namespace Pololu.Usc.Linux
 
         
     }
-    */
+*/    
 }

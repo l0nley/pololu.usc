@@ -1,11 +1,10 @@
-using Pololu.Usc;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace Pololu
+namespace Pololu.Usc.Models
 {
-    internal class Sequence
+    public class Sequence
     {
         public string name;
         public List<Frame> frames = new List<Frame>();
@@ -349,7 +348,8 @@ namespace Pololu
         /// This means converting the names (e.g. "0013") to integers.
         /// </summary>
         /// <remarks>http://msdn.microsoft.com/en-us/library/system.collections.icomparer.compare.aspx</remarks>
-        private class FrameKeyNameComparer : IComparer<String>
+        /*
+        private class FrameKeyNameComparer : IComparer<string>
         {
             public int Compare(string x, string y)
             {
@@ -363,5 +363,6 @@ namespace Pololu
                 }
             }
         }
+        */
     }
 }

@@ -1,0 +1,13 @@
+D:\Projects\pololu.usc\Polulu.Usc.Cmd\bin\Debug\netcoreapp3.1\Polulu.Usc.Cmd.exe
+D:\Projects\pololu.usc\Polulu.Usc.Cmd\bin\Debug\netcoreapp3.1\Polulu.Usc.Cmd.deps.json
+D:\Projects\pololu.usc\Polulu.Usc.Cmd\bin\Debug\netcoreapp3.1\Polulu.Usc.Cmd.runtimeconfig.json
+D:\Projects\pololu.usc\Polulu.Usc.Cmd\bin\Debug\netcoreapp3.1\Polulu.Usc.Cmd.runtimeconfig.dev.json
+D:\Projects\pololu.usc\Polulu.Usc.Cmd\bin\Debug\netcoreapp3.1\Polulu.Usc.Cmd.dll
+D:\Projects\pololu.usc\Polulu.Usc.Cmd\bin\Debug\netcoreapp3.1\Polulu.Usc.Cmd.pdb
+D:\Projects\pololu.usc\Polulu.Usc.Cmd\obj\Debug\netcoreapp3.1\Polulu.Usc.Cmd.csprojAssemblyReference.cache
+D:\Projects\pololu.usc\Polulu.Usc.Cmd\obj\Debug\netcoreapp3.1\Polulu.Usc.Cmd.csproj.CoreCompileInputs.cache
+D:\Projects\pololu.usc\Polulu.Usc.Cmd\obj\Debug\netcoreapp3.1\Polulu.Usc.Cmd.AssemblyInfoInputs.cache
+D:\Projects\pololu.usc\Polulu.Usc.Cmd\obj\Debug\netcoreapp3.1\Polulu.Usc.Cmd.AssemblyInfo.cs
+D:\Projects\pololu.usc\Polulu.Usc.Cmd\obj\Debug\netcoreapp3.1\Polulu.Usc.Cmd.dll
+D:\Projects\pololu.usc\Polulu.Usc.Cmd\obj\Debug\netcoreapp3.1\Polulu.Usc.Cmd.pdb
+D:\Projects\pololu.usc\Polulu.Usc.Cmd\obj\Debug\netcoreapp3.1\Polulu.Usc.Cmd.genruntimeconfig.cache
