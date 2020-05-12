@@ -5,4 +5,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Polulu.Usc\Pololu.Usc.csproj" />
+  </ItemGroup>
+
 </Project>

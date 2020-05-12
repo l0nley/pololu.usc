@@ -10,7 +10,7 @@ namespace Polulu.Usc.Cmd
             var devices = MaestroController.GetDevices();
             foreach(var device in devices)
             {
-
+                Console.WriteLine($"NAME:{device.Name};\tSN:{device.SerialNumber};\tPID:{device.ProductId}");
             }
         }
     }
